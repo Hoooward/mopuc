@@ -1,0 +1,2 @@
+include ':mopuc-example', ':mopuc-annotations', ':mopuc-compiler', ':mopuc-core', ':mopuc-ec'
+rootProject.name='example'
