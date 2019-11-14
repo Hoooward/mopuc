@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.juzix.ai.mopuc.example"
         minSdkVersion 14
@@ -21,5 +27,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':mopuc-ec')
+    implementation project(path: ':mopuc-core')
     annotationProcessor project(path: ':mopuc-compiler')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
+    implementation 'me.yokeyword:fragmentationx:1.0.1'
+// Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
+    implementation 'me.yokeyword:fragmentationx-swipeback:1.0.1'
 }
