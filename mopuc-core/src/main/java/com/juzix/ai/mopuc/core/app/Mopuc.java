@@ -20,4 +20,5 @@ public final class Mopuc {
         return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 
+
 }

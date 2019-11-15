@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 29
@@ -25,5 +26,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':mopuc-core')
+    api project(path: ':mopuc-core')
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 }

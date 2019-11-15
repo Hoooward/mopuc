@@ -1,8 +1,13 @@
 package com.juzix.ai.mopuc.core.app;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 
+import okhttp3.Interceptor;
+
 public class Configurator {
+
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private static final WeakHashMap<String, Object> MOPUC_CONFIGS =
             new WeakHashMap<>();
@@ -26,6 +31,19 @@ public class Configurator {
     public final void configure() {
         MOPUC_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
     }
+
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        MOPUC_CONFIGS.put(ConfigType.INTERCEPTOR.name(), INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withInterceptor(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        MOPUC_CONFIGS.put(ConfigType.INTERCEPTOR.name(), INTERCEPTORS);
+        return this;
+    }
+
 
     public final Configurator withApiHost(String host) {
         MOPUC_CONFIGS.put(ConfigType.API_HOST.name(), host);

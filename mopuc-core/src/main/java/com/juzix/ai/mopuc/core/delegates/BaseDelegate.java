@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.juzix.ai.mopuc.core.activities.ProxyActivity;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
@@ -40,6 +42,10 @@ public abstract class BaseDelegate extends SwipeBackFragment {
 
 //        return super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
+    }
+
+    public final ProxyActivity getProxyActivity() {
+        return (ProxyActivity) _mActivity;
     }
 
     @Override
