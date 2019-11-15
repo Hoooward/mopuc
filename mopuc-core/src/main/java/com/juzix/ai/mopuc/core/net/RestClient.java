@@ -7,6 +7,7 @@ import com.juzix.ai.mopuc.core.net.callback.IFailure;
 import com.juzix.ai.mopuc.core.net.callback.IRequest;
 import com.juzix.ai.mopuc.core.net.callback.ISuccess;
 import com.juzix.ai.mopuc.core.net.callback.RequestCallbacks;
+import com.juzix.ai.mopuc.core.net.download.DownloadHandler;
 import com.juzix.ai.mopuc.core.ui.LoaderStyle;
 import com.juzix.ai.mopuc.core.ui.MopucLoader;
 
@@ -15,7 +16,6 @@ import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +25,11 @@ public class RestClient {
     private final String URL;
     private final Map<String, Object> PARAMS;
     private final IRequest REQUEST;
+
+    private final String DOWNLOAD_DIR;
+    private final String EXTENSION;
+    private final String NAME;
+
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
@@ -34,13 +39,19 @@ public class RestClient {
     private final File FILE;
 
     public RestClient(String URL, Map<String, Object> PARAMS,
+                      String DOWNLOAD_DIR,
+                      String EXTENSION,
+                      String NAME,
                       IRequest REQUEST, ISuccess SUCCESS, IFailure FAILURE,
                       IError ERROR, RequestBody BODY,
                       File file,
-                      LoaderStyle loaderStyle, Context context,
-                      ) {
+                      LoaderStyle loaderStyle, Context context
+    ) {
         this.URL = URL;
         this.PARAMS = PARAMS;
+        this.DOWNLOAD_DIR = DOWNLOAD_DIR;
+        this.EXTENSION = EXTENSION;
+        this.NAME = NAME;
         this.REQUEST = REQUEST;
         this.SUCCESS = SUCCESS;
         this.FAILURE = FAILURE;
@@ -96,6 +107,7 @@ public class RestClient {
                         MultipartBody.Part.createFormData("file",
                                 FILE.getName(), requestBody);
                 call = RestCreator.getRestService().upload(URL, body);
+                break;
             default:
                 break;
         }
@@ -140,4 +152,12 @@ public class RestClient {
         request(HttpMethod.DELETE);
     }
 
+    public final void upload() {
+        request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownloadHandler(URL, PARAMS, REQUEST, DOWNLOAD_DIR, EXTENSION, NAME,
+                SUCCESS, FAILURE, ERROR).handleDownload();
+    }
 }
